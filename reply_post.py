@@ -9,7 +9,7 @@ import os
 reddit = praw.Reddit('bot1')
 
 # and login
-#reddit.login(REDDIT_USERNAME, REDDIT_PASS)
+#reddit.login(thedillbot, pzadg025)
 
 # Have we run this code before? If not, create an empty list
 if not os.path.isfile("posts_replied_to.txt"):
@@ -25,16 +25,16 @@ else:
 
 # Get the top 5 values from our subreddit
 subreddit = reddit.subreddit('pythonforengineers')
-for submission in subreddit.hot(limit=10):
+for submission in subreddit.hot(limit=25):
     #print(submission.title)
 
     # If we haven't replied to this post before
     if submission.id not in posts_replied_to:
 
         # Do a case insensitive search
-        if re.search("i love python", submission.title, re.IGNORECASE):
+        if re.search("help", submission.title, re.IGNORECASE):
             # Reply to the post
-            submission.reply("Nigerian scammer bot says: It's all about the Bass (and Python)")
+            #submission.reply("Did you try googling it?")
             print("Bot replying to : ", submission.title)
 
             # Store the current id into our list
