@@ -1,3 +1,5 @@
+#Adapted from https://github.com/shantnu/RedditBot/blob/master/Part2/reply_post.py
+#Changes made by: DillTice
 #!/usr/bin/python
 import praw
 import pdb
@@ -7,9 +9,6 @@ import os
 
 # Create the Reddit instance
 reddit = praw.Reddit('bot1')
-
-# and login
-#reddit.login(thedillbot, pzadg025)
 
 # Have we run this code before? If not, create an empty list
 if not os.path.isfile("posts_replied_to.txt"):
@@ -26,8 +25,16 @@ else:
 # Get the top 5 values from our subreddit
 subreddit = reddit.subreddit('pythonforengineers')
 for submission in subreddit.hot(limit=25):
-    #print(submission.title)
-
+    #Print submission title
+    print("Title: **",submission.title,"**")
+    #Iterate over all top level comments for the submission
+    for top_level_comment in submission.comments:
+        try:
+            #Prints comment
+            print("-", top_level_comment.body)
+        except UnicodeEncodeError:
+            #Fucking emojis man...
+            pass
     # If we haven't replied to this post before
     if submission.id not in posts_replied_to:
 
@@ -35,11 +42,10 @@ for submission in subreddit.hot(limit=25):
         if re.search("help", submission.title, re.IGNORECASE):
             # Reply to the post
             #submission.reply("Did you try googling it?")
-            print("Bot replying to : ", submission.title)
-
             # Store the current id into our list
             posts_replied_to.append(submission.id)
 
+    print("\n")
 # Write our updated list back to the file
 with open("posts_replied_to.txt", "w") as f:
     for post_id in posts_replied_to:
