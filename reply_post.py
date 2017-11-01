@@ -34,14 +34,14 @@ for submission in subreddit.hot(limit=25):
             print("-", top_level_comment.body)
         except UnicodeEncodeError:
             #Fucking emojis man...
-            pass
+            pass 
     # If we haven't replied to this post before
     if submission.id not in posts_replied_to:
 
         # Do a case insensitive search
         if re.search("help", submission.title, re.IGNORECASE):
             # Reply to the post
-            #submission.reply("Did you try googling it?")
+            submission.reply("Did you try googling it?")
             # Store the current id into our list
             posts_replied_to.append(submission.id)
 
